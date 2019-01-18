@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 1.导入Vue.js的包 -->
+    <script src="./lib/vue-2.5.22.js"></script>
+    <style>
+        /* 解决闪烁问题 */
+        [v-cloak] {
+            display:none
+        }
+    </style>
+</head>
+<body>
+    <!-- 2.创建一个要控制的区域 -->
+    <div id="app">
+        <!-- Mustache语法{{}} -->
+        <p v-cloak>{{ msg }}123</p>
+        <p v-html="msg1">{{ msg }}111</p>
+        <p v-text="msg1">{{ msg }}111</p>
+
+        <!-- v-bind 绑定属性,能写js代码 -->
+        <button v-bind:title="mytitle">bind按钮</button> 
+        <button :title="mytitle + 'abcde'">bind按钮</button>
+
+        <!-- v-on 指令监听 DOM 事件 @ -->
+        <button v-on:click="onSubmit">on按钮</button>
+        <button :title="mytitle" @click="onSubmit">on按钮</button>
+    </div>
+    
+
+    <script>
+        // 3.创建一个Vue实例
+        var vm = new Vue({  // VM层
+            el: '#app',  // 托管的区域
+            // M 层
+            data: {
+                msg: '一日之计在于晨~~',
+                msg1: '<h2>一年之计在于春</h2>',
+                mytitle: '标签~'
+            },
+            methods: {
+                onSubmit(){
+                    // alert('123')
+                    this.msg = this.msg + '111111111111111111'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

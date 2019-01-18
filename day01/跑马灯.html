@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" 
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue-2.5.22.js"></script>
+</head>
+<body>
+    <div id="app">
+        <button @click="run">跑起来</button>
+        <button @click="stop">停下</button>
+        <h4>{{ msg }}</h4>
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '日复一日,年复一年~~~',
+                timerId: null
+            },
+            methods: {
+                run(){
+                    clearInterval(this.timerId)
+                    this.timerId = setInterval(() => {
+                        let head = this.msg.substr(0,1)
+                        let end = this.msg.substr(1)
+                        this.msg = end + head
+                    },200)
+                },
+                stop(){
+                    clearInterval(this.timerId)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

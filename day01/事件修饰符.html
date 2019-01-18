@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.5.22.js"></script>
+    <style>
+        .box {
+            height: 150px;
+            background-color: darkcyan;
+        }
+        .box1 {
+            height: 550px;
+            background-color: red;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- .stop  阻止事件冒泡 -->
+        <!-- <div class="box" @click="box">
+            <button @click.stop="btn">戳他</button>
+        </div> -->
+
+        
+        <!-- .capture  触发事件捕获 -->
+        <!-- <div class="box" @click.capture="box">
+            <button @click="btn">戳他</button>
+        </div> -->
+
+
+        <!-- .self  只阻止自己身上的冒泡行为被触发 -->
+        <!-- <div class="box1" @click="box1">
+            <div class="box" @click.self="box">
+                <button @click="btn">戳他</button>
+            </div>
+        </div> -->
+
+
+        <!-- .prevent  阻止默认事件被触发 -->
+        <!-- <a href="http://www.baidu.com" @click.prevent="link">上百度</a> -->
+
+
+        <!-- .once  只触发一次事件处理函数(阻止默认事件也只有一次) -->
+        <!-- <a href="http://www.baidu.com" @click.prevent.once="link">上百度</a> -->
+         
+    </div>
+    
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                box(){
+                    console.log('第一个盒子响应了');
+                },
+                box1(){
+                    console.log('第二个盒子响应了');
+                },
+                btn(){
+                    console.log('按钮响应了');          
+                },
+                link(){
+                    console.log('link被触发');
+                }
+            }
+        })
+    </script>
+</body>
+</html>
