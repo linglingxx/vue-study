@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.5.22.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>{{ val }}</h2>
+        <!-- v-bind 只能单向数据绑定 -->
+        <input type="text" :value="val"><br>
+        <!-- Vue 唯一一个可以实现双向数据绑定的指令: v-model -->
+        <!-- 用户与input交互时,修改的都是value属性的值,所以v-model只能绑定value属性 -->
+        <input type="text" v-model="val">
+        <!-- v-model可以从M层绑定到V层,也可以在修改value属性时,自动同步到M层 -->
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                val: '路遥知马力日久见人心!'
+            }
+        })
+    </script>
+</body>
+</html>

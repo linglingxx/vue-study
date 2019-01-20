@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.5.22.js"></script>
+    <style>
+        .red {
+            color: red
+        }
+        .thin {
+            font-weight: 200;
+        }
+        .italic {
+            font-style: italic;
+        }
+        .active {
+            letter-spacing: 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 1.直接传递一个数组 -->
+        <p :class="['italic']">212323123</p>
+        <!-- 2.三元表达式来决定是否动态添加数组元素 -->
+        <p :class="[ flag?'active':'']">212323123</p>
+        <p :class="['red',{active: flag}]">212323123</p>
+        <!-- 3.用对象替代三元表达式 -->
+        <p :class="classObj">212323123</p>
+        <p :class="{red: flag, active: flag}">888999888999</p>
+
+        <p :style="{'background-color': 'pink', color: 'purple'}">999999999999999999999</p>
+        <!-- 通过绑定数组,同时绑定多个样式对象 -->
+        <h1 :style="[ styleObj1,styleObj2 ]">h1大标题!</h1>
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                flag: true,
+                classObj: {italic:true, red:false, active:false},
+                styleObj1: {'color':'green', 'font-wigth': 200},
+                styleObj2: {'font-style':'italic'}
+            }
+        })
+
+    
+    </script>
+    ''
+</body>
+</html>

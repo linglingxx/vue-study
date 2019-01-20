@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.5.22.js"></script>
+</head>
+<body>
+    
+    <div id="app">
+        <p> {{ msg | msgFormat('二', '123') | test }} </p>
+    </div>
+    
+    <script>
+        // 定义一个全局过滤器
+        Vue.filter('msgFormat', function(msg, das, das2) {
+            return msg.replace(/一/g, das + das2)
+        })
+        Vue.filter('test', function(msg) {
+            return msg + '-----------------======'
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg : '一日一周一月一年一生一世!'
+            },
+            methods: {}
+        })
+    
+    </script>
+</body>
+</html>
