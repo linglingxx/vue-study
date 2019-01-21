@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.5.22.js"></script>
+    <script src="./lib/vue-resource.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+    <script src="./lib/moment.js"></script>
+    <style>
+        #table {
+            margin: 0 10px;
+        }
+        #bgs:hover {
+            background-color: skyblue;
+            transition: all 0.8s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 面板区域 -->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    添加品牌
+                </h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label>
+                    Name: 
+                    <input type="text" v-model="name" class="form-control" @keyup.enter="add()" id="del">
+                </label>
+
+                <button class="btn btn-primary" @click="add()">添加</button>
+
+                <label> 
+                    搜索关键字: 
+                    <input type="text" v-model="keywords" placeholder="请输入关键字..." class="form-control" id="search">
+                </label>
+            </div>
+        </div>
+
+        <!-- 表格区域 -->
+        <div id="table">
+            <table class="table table-bordered table-hover table-striped">
+                <thead navbar-fixed-top>
+                    <tr>
+                        <th>序号</th>
+                        <th>名称</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, i) in search(keywords)" :key="item.id" id="bgs">
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.ctime | dateFormat() }}</td>
+                        <td><a href="javascript:;" @click=del(item.id)>删除</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+
+    </div>
+    
+    <script>
+        Vue.filter('dateFormat', (dateStr, parttern="YYYY-MM-DD hh:mm:ss") => {
+            console.log(parttern);
+            return moment(dateStr).format(parttern)
+        })
+
+        Vue.http.options.root = 'http://vue.lovegf.cn:8899/api/'
+        Vue.http.options.emulateJSON = true
+
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                id: '',
+                name: '',
+                keywords: '',
+                products: []
+            },
+            methods: {
+                getAllProducts() {
+                    this.$http.get('getprodlist').then(result => {
+                        this.products = result.body.message
+                    })
+                },
+                add() {
+                    if(!this.name.trim()) return alert('请输入数据')
+                    this.$http.post('addproduct', { name: this.name }).then(result => {
+                        this.getAllProducts()
+                        this.name = ''
+                    })
+                },
+                del(id) {
+                    this.$http.get('delproduct/' + id).then(result => {
+                        this.getAllProducts()
+                    })
+                    
+                },
+                search(keywords) {
+                    return this.products.filter(item => {
+                        if( item.name.includes(keywords)) {
+                            return true
+                        }
+                    })
+                }
+            },
+            created() {
+                this.getAllProducts()
+            },
+        })
+    
+    </script>
+</body>
+</html>
