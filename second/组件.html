@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.5.22.js"></script>
+</head>
+<body>
+    
+    <div id="app">
+        <!-- <mycoml></mycoml> -->
+        <counter></counter>
+        <hr>
+        <counter></counter>
+        <hr>
+        <counter></counter>
+
+    </div>
+
+    <template id="tmp">
+        <div>
+            <input type="button" value="+1" @click="increment">
+            <h3>{{ count }}</h3>
+        </div>
+    </template>
+    
+    <script>
+        // 1. 组件可以有自己的 data 数据
+        // 2. 组件的 data 和实例的 data 有点不一样,在实例中的 data 可以作为一个对象, 但组件中的 data 必须是一个方法
+        // 3. 组件中的 data 除了必须是一个方法之外,这个方法内部,还必须返回一个对象
+        // 4. 组件中 data 数据,使用方式和实例中的 data 使用方法完全不一样
+       /*  Vue.component('mycoml', {
+            template: '<h1>这是全局组件 --- {{ msg }}</h1>',
+            data: function () {
+                return {
+                    msg: '这是组件的data定义的数据'
+                }
+            }
+        }) */
+
+        // 这是一个计数器的组件, 身上有个按钮,每当点击按钮,让 data 中的 count 值 +1
+        let dataObj = { count: 0 }
+        Vue.component('counter', {
+            template: '#tmp',
+            data: function () {
+                // return dataObj
+                return { count: 0 }
+            },
+            methods: {
+                increment() {
+                    this.count++
+                }
+            }
+        })
+
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        })
+    
+    </script>
+</body>
+</html>

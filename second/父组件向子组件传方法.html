@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.5.22.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 父组件向子组件传递方法使用的是 事件绑定机制; v-on  -->
+        <com1 @func="show"></com1>
+    </div>
+
+    <template id="tmp">
+        <div>
+            <h1>这是子组件</h1>
+            <input type="button" value="子组件的按钮 - 点击它,触发父元素传来的 func 方法" @click="myclick">
+        </div>
+    </template>
+    
+    <script>
+        let com = {
+            template: '#tmp', // 通过指定了一个Id,表示要去加载这个指定Id的 template 元素中的内容, 当作组件的 HTML 结构
+            data() {
+                return {
+                    sonmsg: { name: '儿子', age: 8}
+                }
+            },
+            methods: {
+                myclick() {
+                    // emit触发调用的意思   
+                    this.$emit('func', this.sonmsg)
+                }
+            }
+        }
+    
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                datamsgFormSon: null
+            },
+            methods: {
+                show(data) {
+                    this.datamsgFormSon = data
+                }
+            },
+            components: {
+                'com1':com
+            }
+        })
+    
+    </script>
+</body>
+</html>
