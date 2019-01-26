@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.5.22.js"></script>
+    <!-- 引入vue-router 文件 -->
+    <script src="./lib/vue-router-3.0.1.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- router-link 指定要跳转的url地址 -->
+        <router-link to="/login">登录</router-link>
+        <router-link to="/register">注册</router-link>
+
+        <!-- router-view 占位符, 展示路由规则匹配的 组件 -->
+        <router-view></router-view>
+    </div>
+    
+    <script>
+        // 组件的模板对象
+        let login = {
+            template: '<h2>这是登录页</h2>'
+        }
+        let register = {
+            template: '<h2>这是注册页</h2>'
+        }
+
+        // 引入 vue-router 包后, window全局对象中就有了一个 路由的构造函数 VueRouter
+        // new一个路由对象, 为构造函数传递一个配置对象
+        let router = new VueRouter({
+            // route 路由匹配规则
+            routes: [
+                // 每个路由规则都是一个对象,每个路由对象上有两个必写属性:
+                // 1. path, 监听哪个路由地址
+                // 2. component, 和前面 path 对应的那个组件,属性值必须是组件模板对象
+                { path: '/', redirect: '/login'},  // 路由重定向, 当用户访问 / 路径时 自动跳转到 /login 路径
+                { path: '/login', component: login},
+                { path: '/register', component: register}
+            ]
+        })
+    
+        let vm = new Vue({
+            el: '#app',
+            data: {
+    
+            },
+            methods: {},
+            router  // 把 router 挂载到 vm 实例上, 监听url地址的变化,展示对应的组件
+        })
+    
+    </script>
+</body>
+</html>

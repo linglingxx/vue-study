@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.5.22.js"></script>
+    <script src="./lib/vue-router-3.0.1.js"></script>
+</head>
+<body>
+    <div id="app">
+        <router-link to="/account">account</router-link>
+
+        <router-view></router-view>
+    </div>
+
+    <template id="tmp">
+        <div>
+            <h1>这是account页面</h1>
+            <router-link to="/account/login">login</router-link>
+            <router-link to="/account/register">register</router-link>
+
+            <router-view></router-view>
+        </div>
+    </template>
+    
+    <script>
+        let account = {
+            template: '#tmp'
+        }
+        let login = {
+            template: '<h3>登录</h3>'
+        }
+        let register = {
+            template: '<h3>注册</h3>'
+        }
+
+        let router = new VueRouter({
+            routes: [
+                { 
+                    path: '/account', 
+                    component: account,
+                    children: [
+                        // 子路由的path的前面不要带 / ,否则会以根路径开始请求,不好理解URL地址
+                        { path: 'login', component: login },
+                        { path: 'register', component: register }
+                    ] 
+                }
+            ]
+        })
+    
+        let vm = new Vue({
+            el: '#app',
+            data: {
+    
+            },
+            methods: {},
+            router
+        })
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.5.22.js"></script>
+    <script src="./lib/vue-router-3.0.1.js"></script>
+    <style>
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+        ul li {
+            list-style: none;
+            border: dashed 1px #000;
+            padding-left: 10px;
+            margin: 10px 0;
+
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <router-view></router-view>
+    </div>
+
+    <template id="tmp">
+        <div>
+            <h2>这是列表页</h2>
+            <ul class="news-list">
+                <!-- 给to加上属性绑定,将to属性的值作为表达式来解析,如果不加属性绑定,就会被当做纯文本字符串来解析 -->
+                <!-- query方法传参   -->
+                <!-- <router-link :to="'/newInfo?id=' + news.id" tag="li" v-for="news in newList" :key="news.id">
+                    <p :style="{ color: 'lightblue', fontWeight:700}">标题: {{ news.title }}</p>
+                    <p>内容简介: {{ news.content }}</p>
+                </routerlink> -->
+
+                <!-- params方法传参 -->
+                <router-link :to="'/newInfo/' + news.id" tag="li" v-for="news in newList" :key="news.id">
+                    <p :style="{ color: 'lightblue', fontWeight:700}">标题: {{ news.title }}</p>
+                    <p>内容简介: {{ news.content }}</p>
+                </routerlink>
+            </ul>
+        </div>
+    </template>
+
+    <template id="tmp1">
+        <div>
+            <h2>这是详情页 --- {{ $route.query.id }} {{ $route.params.id }}</h2>
+        </div>
+    </template>
+    
+    <script>
+        let newListComponent = {
+            template: '#tmp',
+            data: function() {
+                return {
+                    newList: [
+                        { id: 1, title: '长江日报', content: '长江水漫,黄河水降,究竟是人性的泯灭?还是道德的沦丧?'},
+                        { id: 2, title: '黄河晚报', content: '长江水漫,黄河水降,究竟是人性的泯灭?还是道德的沦丧?'},
+                        { id: 3, title: '长江日报', content: '长江水漫,黄河水降,究竟是人性的泯灭?还是道德的沦丧?'},
+                        { id: 4, title: '黄河晚报', content: '长江水漫,黄河水降,究竟是人性的泯灭?还是道德的沦丧?'},
+                        { id: 5, title: '长江日报', content: '长江水漫,黄河水降,究竟是人性的泯灭?还是道德的沦丧?'}
+                    ]
+                }
+            }
+        }
+        let newInfoComponent = {
+            template: '#tmp1',
+            created(){
+                console.log(this.$route)
+                
+            }
+        }
+
+        let router = new VueRouter({
+            routes: [
+                { path: '/', redirect: '/newList'},
+                { path: '/newList', component: newListComponent},
+                // 使用 query 传参,不改动路由的匹配规则
+                // { path: '/newInfo', component: newInfoComponent}
+                // 使用 params 传参,需要修改路由的匹配规则
+                { path: '/newInfo/:id', component: newInfoComponent}
+            ]
+        })
+    
+        let vm = new Vue({
+            el: '#app',
+            data: {
+    
+            },
+            methods: {},
+            router
+        })
+    
+    </script>
+
+</body>
+</html>

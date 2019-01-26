@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.5.22.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- <input type="text" v-model="firstname" @keyup="getfull"> +
+        <input type="text" v-model="lastname" @keyup="getfull"> =
+        <input type="text" v-model="fullname">
+        <button @click="firstname='苏'">点击一下</button> -->
+
+        <input type="text" v-model="firstname"> +
+        <input type="text" v-model="middlename"> +
+        <input type="text" v-model="lastname"> =
+        <input type="text" v-model="fullname">
+        <button @click="firstname='苏'">点击一下</button>
+
+        <p>{{ fullname }}</p>
+        <p>{{ fullname }}</p>
+        <p>{{ fullname }}</p>
+        
+    </div>
+    
+    <script>
+    
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                firstname: '',
+                lastname: '',
+                middlename:''
+                // fullname: ''
+            },
+            methods: {
+                // getfull(){
+                //     this.fullname = this.firstname + '-' + this.lastname
+                // }
+            },
+            // watch: {  
+            //     // 这个属性,可以监视data中的数据变化,然后触发watch中对应的function处理函数
+            //     'firstname'(newVal, oldVal){
+            //         // this.fullname = this.firstname + '-' + this.lastname
+            //         this.fullname = newVal + '-' + this.lastname
+            //     },
+            //     'lastname'(newVal){
+            //         // this.fullname = this.firstname + '-' + this.lastname
+            //         this.fullname = this.firstname + '-' + newVal
+            //     }
+            // }
+            computed: {  // 在computed 中, 可以定义一些属性, 这些属性叫做 '计算属性',本质就是一个方法,不过使用时, 是把它们的名称直接当做属性来使用,并不会当做方法去调用
+            //  计算属性引用时不能加 () 调用, 直接把它当做普通属性去使用
+            //  只要 计算属性 ,这个函数内部用到的任何 data 中的数据发生了变化就会立刻重新计算这个 计算属性 的值
+            //  计算属性的求值结果, 会被缓存起来,方便下次使用
+                'fullname': function () {  
+                    console.log('ok');
+                    
+                    return this.firstname + '-' + this.middlename + '-' + this.lastname
+                }
+            }
+        })
+    
+    </script>
+</body>
+</html>
