@@ -16,7 +16,7 @@ module.exports = {
         //  --open --port 3000 --contentBase ./src --hot
         open: true, // 自动打开浏览器
         port: 3000, // 设置启动时的运行端口号
-        contentBase: './src', // 指定托管的根目录
+        // contentBase: './src', // 指定托管的根目录
         hot: true // 启用热更新HMR的 第一步
     },
     plugins: [ // 配置插件的节点
@@ -32,7 +32,11 @@ module.exports = {
         rules: [  // 所有第三方模块的 匹配规则
             { test: /\.css$/, use: ['style-loader', 'css-loader'] },
             { test: /\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] },
-            { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] }
+            { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] },
+            { test: /\.(jpg|png|gif|bmp|jpeg)$/, use: 'url-loader?limit=8900&name=[hash:3]-[name].[ext]' },
+            // limit 给定的值是图片大小,单位 byte, 如果引用的图片大于等于给定的limit值,就不会被转为base64格式字符串,如果引用的图片小于limit值,则会被转为 base64 的字符串
+            { test: /\.(eot|svg|ttf|woff|woff2)$/, use: 'url-loader' }
+
         ]
     }
     // mode: 'development'

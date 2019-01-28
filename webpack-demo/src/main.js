@@ -9,12 +9,13 @@ import './css/index.css'
 import './css/index.less'
 import './css/index.scss'
 // webpack 默认只能打包处理 JS 类型的文件, 无法处理其他的非 JS 类型的文件,必须手动安装合适的第三方 loader 加载器
+import 'bootstrap/dist/css/bootstrap.css'
 
 $(function () {  
-    $('li:odd').css('backgroundColor', 'pink')
-    $('li:even').css('backgroundColor', function(){
-        return '#' + '666'
-    })
+    // $('li:odd').css('backgroundColor', 'pink')
+    // $('li:even').css('backgroundColor', function(){
+    //     return '#' + '666'
+    // })
 })
 
 // webpack 能够处理 JS 文件的相互依赖关系
